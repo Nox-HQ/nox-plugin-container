@@ -1,0 +1,16 @@
+# Another bad Dockerfile with different issues -- multi-stage but still problematic.
+
+FROM node:latest AS build
+WORKDIR /src
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM node:latest
+WORKDIR /app
+COPY --from=build /src/dist ./dist
+COPY .aws/credentials /root/.aws/credentials
+EXPOSE 25
+RUN apk add curl
+CMD ["node", "dist/index.js"]
