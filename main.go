@@ -50,9 +50,6 @@ var (
 	// Matches USER instruction.
 	reUser = regexp.MustCompile(`(?i)^USER\s+`)
 
-	// Matches COPY with --chown or general COPY.
-	reCopy = regexp.MustCompile(`(?i)^COPY\s+`)
-
 	// Matches ADD instruction.
 	reAdd = regexp.MustCompile(`(?i)^ADD\s+`)
 
@@ -63,9 +60,9 @@ var (
 	reExpose = regexp.MustCompile(`(?i)^EXPOSE\s+(.+)`)
 
 	// Matches RUN with apt-get/apk but no cleanup.
-	reRunAptGet = regexp.MustCompile(`(?i)^RUN\s+.*apt-get\s+install`)
-	reRunApkAdd = regexp.MustCompile(`(?i)^RUN\s+.*apk\s+add`)
-	reAptClean = regexp.MustCompile(`(?i)apt-get\s+clean|rm\s+-rf\s+/var/lib/apt`)
+	reRunAptGet  = regexp.MustCompile(`(?i)^RUN\s+.*apt-get\s+install`)
+	reRunApkAdd  = regexp.MustCompile(`(?i)^RUN\s+.*apk\s+add`)
+	reAptClean   = regexp.MustCompile(`(?i)apt-get\s+clean|rm\s+-rf\s+/var/lib/apt`)
 	reApkNoCache = regexp.MustCompile(`(?i)--no-cache`)
 
 	// Matches RUN with curl piped to shell (curl | sh pattern).
@@ -271,7 +268,7 @@ func scanDockerfile(resp *sdk.ResponseBuilder, filePath string) error {
 	if err != nil {
 		return nil
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	var lines []dockerfileLine
 	scanner := bufio.NewScanner(f)
@@ -580,12 +577,17 @@ func checkSudoUsage(lines []dockerfileLine) []ruleMatch {
 }
 
 func main() {
+	os.Exit(run())
+}
+
+func run() int {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
 	srv := buildServer()
 	if err := srv.Serve(ctx); err != nil {
 		fmt.Fprintf(os.Stderr, "nox-plugin-container: %v\n", err)
-		os.Exit(1)
+		return 1
 	}
+	return 0
 }
