@@ -19,9 +19,3 @@ updates:
     labels:
       - dependencies
       - ci
-    ignore:
-      # cosign v4 changed the bundle format and breaks goreleaser's
-      # --output-signature keyless signing; cosign-installer is pinned to
-      # v3.x in release.yml on purpose. Don't propose the major bump.
-      - dependency-name: "sigstore/cosign-installer"
-        update-types: ["version-update:semver-major"]
