@@ -1,0 +1,9 @@
+# nox self-scan configuration.
+#
+# testdata/ holds this plugin's ground-truth fixtures: container fixtures use unpinned base images on purpose (CONT-002).
+# They are the inputs the plugin is built to detect, not defects in the plugin,
+# so the self-scan must not report them — otherwise the gate fills with known
+# false positives and stops being read.
+scan:
+  exclude:
+    - "testdata/"
