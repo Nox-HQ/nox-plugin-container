@@ -17,3 +17,7 @@ All notable changes to this project will be documented in this file.
 - ci: exclude testdata fixtures from the nox self-scan (#20)
 - ci: add nox self-scan and changed-files PR gate (#19)
 
+
+
+- chore(release): update changelog for 0.2.3
+
