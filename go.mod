@@ -3,9 +3,9 @@ module github.com/nox-hq/nox-plugin-container
 go 1.26.5
 
 require (
-	github.com/nox-hq/nox v1.27.0
+	github.com/nox-hq/nox v1.29.0
 	google.golang.org/grpc v1.83.0
-	google.golang.org/protobuf v1.36.11
+	google.golang.org/protobuf v1.36.12
 )
 
 require (
