@@ -1,5 +1,7 @@
 # nox-plugin-container
 
+[![nox security grade](.github/nox-badge.svg)](https://github.com/nox-hq/nox)
+
 **Scan Dockerfiles for security misconfigurations, dangerous patterns, and best practice violations.**
 
 <!-- badges -->
@@ -56,6 +58,7 @@ When a developer creates a new Dockerfile, this plugin provides immediate feedba
    FROM node
 
    ENV DATABASE_PASSWORD=supersecret123
+   # nox:ignore SEC-469 -- placeholder value in the example this plugin is shown flagging
    ENV API_KEY=sk-prod-abc123xyz
 
    RUN apt-get update && apt-get install -y curl
