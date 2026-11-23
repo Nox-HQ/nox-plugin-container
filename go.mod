@@ -3,7 +3,7 @@ module github.com/nox-hq/nox-plugin-container
 go 1.27.4
 
 require (
-	github.com/nox-hq/nox v1.68.0
+	github.com/nox-hq/nox v1.70.0
 	google.golang.org/grpc v1.85.0
 	google.golang.org/protobuf v1.36.12
 )
